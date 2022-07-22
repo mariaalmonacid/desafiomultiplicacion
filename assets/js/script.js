@@ -8,38 +8,47 @@ el ejercicio.
 
 
 //ciclo anidado,se utiliza las caracteristicas de ES6 let y arrow
-let factorial_numero=0
-while (factorial_numero <= 20) {
-    console.log(factorial_numero);
-    factorial_numero++;
-}
-for (let i = 1; i <= 2; i++) {
-    let res = 1;
-    for (let j = 1; j <= i; j++) {
-        res = res * j;
-    }
-    console.log("Factorial de " + i + " es: " + res);
-  
-    let factorial_numero = (x) => {
-        
-        if (x > 1) {
-
-            return x * factorial_numero(x - 1); // fórmula para el factorial: X * (X-1)!
-        } else {
-            return x;
-        }
-    }
-    var x = prompt("Ingrese un número que se encuentre entre 1 y 20");
-
-    
-
-    document.write(`El factorial de ${x}! es: ${factorial_numero(x)}`);
-
-    /*tengo la dificultad de entregar el criterio: En caso de que no corresponda al
-rango, mostrar un mensaje al usuario: "número fuera del rango"¿Cómo lo puedo solucionar?*/
-    alert ("factorial_numero <20; número fuera del rango");
+let limpiar = () => {
+    document.querySelector("#mensajes").innerHTML="";
 }
 
+let form = document.getElementById("formulario");
+
+form.addEventListener("submit", function(e){
+    //console.log(e.originalTarget[0].value)
+    e.preventDefault();
+    let numero1 = document.getElementById("numero1").value;
+
+    calcular(numero1)
+})
 
 
+let calcular = (num) => {
+    let contenedorTabla = document.getElementById("tablas");
+    contenedorTabla.innerHTML ="";
+    let contenedorFactorial = document.getElementById("factorial");
+    contenedorFactorial.innerHTML = "";
 
+    document.getElementById("factorial").innerHTML =""
+    let tabla ="<h2>Resultado de las tablas:</h2>";
+    let factorial = "<h2>Resultado del factorial:</h2>";
+    if (num < 1 || num > 20) {
+        let parrafo = document.querySelector("#mensajes");
+        parrafo.innerText = "Número se sale del rango solicitado";
+        return false; 
+    } 
+    limpiar();
+    for (let i = 1; i <= num; i++) { 
+        let prod = i * num;
+        tabla +=`<p>${i} x ${num} = ${prod}</p>`; 
+    } 
+    for (let i = 1; i <= num; i++) { 
+        let res = 1; 
+        for (let j = 1; j <= i; j++) { 
+            res = res * j; 
+        } 
+        factorial += `<p>Factorial de  ${i} es: ${res}</p>`; 
+    }
+    contenedorTabla.innerHTML = tabla;
+    contenedorFactorial.innerHTML = factorial;
+}
